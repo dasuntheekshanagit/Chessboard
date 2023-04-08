@@ -1,0 +1,48 @@
+body {
+    background-color: gray;
+    background-image: url("../img/bg.jpg");
+    width: 100%;
+}
+
+#board {
+    margin-top: 2rem;
+    margin-left: 10rem;
+}
+
+.piece-box {
+    height: 100px;
+    width: 100px;
+    text-align: center;
+}
+
+.boarder-box {
+    height: 40px;
+    width: 100px;
+    text-align: center;
+    font-size: 2rem;
+    background-color: brown;
+    color: white;
+    font-weight: bold;
+}
+
+.boarder-box-2 {
+    height: 100px;
+    width: 40px;
+    text-align: center;
+    font-size: 2rem;
+    background-color: brown;
+    color: white;
+    font-weight: bold;
+}
+
+.black-box {
+    background-color: black;
+}
+
+.white-box {
+    background-color: white;
+}
+
+.div-row {
+    display: flex;
+}
