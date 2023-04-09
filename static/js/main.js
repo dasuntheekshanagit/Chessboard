@@ -7,16 +7,21 @@ let nums = "87654321".split("");
 const pieces = {
     'rook': 'static/img/pieces/Chess_rlt45.svg',
     'rook_black': 'static/img/pieces/black_Chess_rlt45.svg',
+
     'knight': 'static/img/pieces/Chess_nlt45.svg',
     'knight_black': 'static/img/pieces/black_Chess_nlt45.svg',
+
     'bishop': 'static/img/pieces/Chess_blt45.svg',
     'bishop_black': 'static/img/pieces/black_Chess_blt45.svg',
+
     'queen': 'static/img/pieces/Chess_qlt45.svg',
     'queen_black': 'static/img/pieces/black_Chess_qlt45.svg',
+
     'king': 'static/img/pieces/Chess_klt45.svg',
     'king_black': 'static/img/pieces/black_Chess_klt45.svg',
+
     'pawn': 'static/img/pieces/Chess_plt45.svg',
-    'pawn_black': 'static/img/pieces/black_Chess_plt45.svg',
+    'pawn_black': 'static/img/pieces/black_Chess_plt45.svg'
   };
 
 let moves = {
