@@ -16,7 +16,7 @@ let moves = {
     'a8':'rook','h8':'rook','a1':'rook','h1':'rook',
     'b8':'knight','g8':'knight','b1':'knight','g1':'knight',
     'c8':'bishop','f8':'bishop','c1':'bishop','f1':'bishop',
-    'd8':'king','e8':'queen','d1':'queen','e1':'king',
+    'd8':'queen','e8':'king','d1':'queen','e1':'king',
     'a7':'pawn','b7':'pawn','c7':'pawn','d7':'pawn','e7':'pawn','f7':'pawn','g7':'pawn','h7':'pawn',
     'a2':'pawn','b2':'pawn','c2':'pawn','d2':'pawn','e2':'pawn','f2':'pawn','g2':'pawn','h2':'pawn'
 }
