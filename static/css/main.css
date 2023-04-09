@@ -13,6 +13,9 @@ body {
     height: 100px;
     width: 100px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .boarder-box {
@@ -36,7 +39,7 @@ body {
 }
 
 .black-box {
-    background-color: black;
+    background-color: rgb(61, 61, 61);
 }
 
 .white-box {
@@ -46,3 +49,18 @@ body {
 .div-row {
     display: flex;
 }
+.piece {
+    height: 100%;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .piece.white {
+    filter: invert(1);
+  }
+  
+  .piece.black {
+    filter: none;
+  }
