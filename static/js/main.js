@@ -6,19 +6,25 @@ let nums = "87654321".split("");
 
 const pieces = {
     'rook': 'static/img/pieces/Chess_rlt45.svg',
+    'rook_black': 'static/img/pieces/black_Chess_rlt45.svg',
     'knight': 'static/img/pieces/Chess_nlt45.svg',
+    'knight_black': 'static/img/pieces/black_Chess_nlt45.svg',
     'bishop': 'static/img/pieces/Chess_blt45.svg',
+    'bishop_black': 'static/img/pieces/black_Chess_blt45.svg',
     'queen': 'static/img/pieces/Chess_qlt45.svg',
+    'queen_black': 'static/img/pieces/black_Chess_qlt45.svg',
     'king': 'static/img/pieces/Chess_klt45.svg',
-    'pawn': 'static/img/pieces/Chess_plt45.svg'
+    'king_black': 'static/img/pieces/black_Chess_klt45.svg',
+    'pawn': 'static/img/pieces/Chess_plt45.svg',
+    'pawn_black': 'static/img/pieces/black_Chess_plt45.svg',
   };
 
 let moves = {
-    'a8':'rook','h8':'rook','a1':'rook','h1':'rook',
-    'b8':'knight','g8':'knight','b1':'knight','g1':'knight',
-    'c8':'bishop','f8':'bishop','c1':'bishop','f1':'bishop',
-    'd8':'queen','e8':'king','d1':'queen','e1':'king',
-    'a7':'pawn','b7':'pawn','c7':'pawn','d7':'pawn','e7':'pawn','f7':'pawn','g7':'pawn','h7':'pawn',
+    'a8':'rook_black','h8':'rook_black','a1':'rook','h1':'rook',
+    'b8':'knight_black','g8':'knight_black','b1':'knight','g1':'knight',
+    'c8':'bishop_black','f8':'bishop_black','c1':'bishop','f1':'bishop',
+    'd8':'queen_black','e8':'king_black','d1':'queen','e1':'king',
+    'a7':'pawn_black','b7':'pawn_black','c7':'pawn_black','d7':'pawn_black','e7':'pawn_black','f7':'pawn_black','g7':'pawn_black','h7':'pawn_black',
     'a2':'pawn','b2':'pawn','c2':'pawn','d2':'pawn','e2':'pawn','f2':'pawn','g2':'pawn','h2':'pawn'
 }
 
