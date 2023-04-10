@@ -23,7 +23,7 @@ body {
     width: 100px;
     text-align: center;
     font-size: 2rem;
-    background-color: brown;
+    background-color: rgb(43, 43, 43);
     color: white;
     font-weight: bold;
 }
@@ -33,13 +33,13 @@ body {
     width: 40px;
     text-align: center;
     font-size: 2rem;
-    background-color: brown;
+    background-color: rgb(43, 43, 43);
     color: white;
     font-weight: bold;
 }
 
 .black-box {
-    background-color: rgb(61, 61, 61);
+    background-color: rgb(134, 76, 0);
 }
 
 .white-box {
@@ -48,6 +48,7 @@ body {
 
 .div-row {
     display: flex;
+    
 }
 .piece {
     height: 100%;
@@ -57,10 +58,3 @@ body {
     background-position: center;
   }
   
-  .piece.white {
-    filter: invert(1);
-  }
-  
-  .piece.black {
-    filter: none;
-  }

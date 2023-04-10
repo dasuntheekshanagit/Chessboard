@@ -152,7 +152,7 @@ function addboarder(){
     divRow.setAttribute("class","div-row");
 
     let divData = document.createElement("div");
-    divData.setAttribute("style","width:40px;height:40px;background-color:brown;");
+    divData.setAttribute("style","width:40px;height:40px;background-color:rgb(43, 43, 43);");
     divRow.appendChild(divData);
 
     for (let i = 0; i <8;i++) {
@@ -162,7 +162,7 @@ function addboarder(){
         divRow.appendChild(divData);
     }
     let divData2 = document.createElement("div");
-    divData2.setAttribute("style","width:40px;height:40px;background-color:brown;");
+    divData2.setAttribute("style","width:40px;height:40px;background-color:rgb(43, 43, 43);");
     divRow.appendChild(divData2);
 
     parentDiv.appendChild(divRow);
