@@ -5,149 +5,149 @@ let alphas = "abcdefgh".split("");
 let nums = "87654321".split("");
 
 const pieces = {
-    'rook': 'static/img/pieces/Chess_rlt45.svg',
-    'rook_black': 'static/img/pieces/black_Chess_rlt45.svg',
+    'RW': 'static/img/pieces/Chess_rlt45.svg',
+    'RB': 'static/img/pieces/black_Chess_rlt45.svg',
 
-    'knight': 'static/img/pieces/Chess_nlt45.svg',
-    'knight_black': 'static/img/pieces/black_Chess_nlt45.svg',
+    'NW': 'static/img/pieces/Chess_nlt45.svg',
+    'NB': 'static/img/pieces/black_Chess_nlt45.svg',
 
-    'bishop': 'static/img/pieces/Chess_blt45.svg',
-    'bishop_black': 'static/img/pieces/black_Chess_blt45.svg',
+    'BW': 'static/img/pieces/Chess_blt45.svg',
+    'BB': 'static/img/pieces/black_Chess_blt45.svg',
 
-    'queen': 'static/img/pieces/Chess_qlt45.svg',
-    'queen_black': 'static/img/pieces/black_Chess_qlt45.svg',
+    'QW': 'static/img/pieces/Chess_qlt45.svg',
+    'QB': 'static/img/pieces/black_Chess_qlt45.svg',
 
-    'king': 'static/img/pieces/Chess_klt45.svg',
-    'king_black': 'static/img/pieces/black_Chess_klt45.svg',
+    'KW': 'static/img/pieces/Chess_klt45.svg',
+    'KB': 'static/img/pieces/black_Chess_klt45.svg',
 
-    'pawn': 'static/img/pieces/Chess_plt45.svg',
-    'pawn_black': 'static/img/pieces/black_Chess_plt45.svg'
+    'PW': 'static/img/pieces/Chess_plt45.svg',
+    'PB': 'static/img/pieces/black_Chess_plt45.svg'
   };
 
-let moves = {
-    'a8':'rook_black','h8':'rook_black','a1':'rook','h1':'rook',
-    'b8':'knight_black','g8':'knight_black','b1':'knight','g1':'knight',
-    'c8':'bishop_black','f8':'bishop_black','c1':'bishop','f1':'bishop',
-    'd8':'queen_black','e8':'king_black','d1':'queen','e1':'king',
-    'a7':'pawn_black','b7':'pawn_black','c7':'pawn_black','d7':'pawn_black','e7':'pawn_black','f7':'pawn_black','g7':'pawn_black','h7':'pawn_black',
-    'a2':'pawn','b2':'pawn','c2':'pawn','d2':'pawn','e2':'pawn','f2':'pawn','g2':'pawn','h2':'pawn'
-}
+let board = [[ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+             [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+             [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+             [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+             [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+             [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ], 
+             [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
+             [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ]]
 
-/*
-const pieces = {
-    'rook-white': {
-        image: 'static/img/pieces/Chess_rlt45.svg',
-        color: 'white'
-    },
-    'knight-white': {
-        image: 'static/img/pieces/Chess_nlt45.svg',
-        color: 'white'
-    },
-    'bishop-white': {
-        image: 'static/img/pieces/Chess_blt45.svg',
-        color: 'white'
-    },
-    'queen-white': {
-        image: 'static/img/pieces/Chess_qlt45.svg',
-        color: 'white'
-    },
-    'king-white': {
-        image: 'static/img/pieces/Chess_klt45.svg',
-        color: 'white'
-    },
-    'pawn-white': {
-        image: 'static/img/pieces/Chess_plt45.svg',
-        color: 'white'
-    },
-    'rook-black': {
-        image: 'static/img/pieces/Chess_rdt45.svg',
-        color: 'black'
-    },
-    'knight-black': {
-        image: 'static/img/pieces/Chess_ndt45.svg',
-        color: 'black'
-    },
-    'bishop-black': {
-        image: 'static/img/pieces/Chess_bdt45.svg',
-        color: 'black'
-    },
-    'queen-black': {
-        image: 'static/img/pieces/Chess_qdt45.svg',
-        color: 'black'
-    },
-    'king-black': {
-        image: 'static/img/pieces/Chess_kdt45.svg',
-        color: 'black'
-    },
-    'pawn-black': {
-        image: 'static/img/pieces/Chess_pdt45.svg',
-        color: 'black'
+class Rook{
+    #side;
+    constructor(side,piece){
+        this.#side = side;
+        this.piece = piece;
     }
-};
+    /*showpath(){
+        let goes = [];
+        let x = nums.indexOf(this.position[0]);
+        let y = alphas.indexOf(this.position[1]);
+        let xl = []
+        for (let i = 8; i > x; i--){
 
-let moves = {
-    'a8':'rook-black','h8':'rook-black','a1':'rook-white','h1':'rook-white',
-    'b8':'knight-black','g8':'knight-black','b1':'knight-white','g1':'knight-white',
-    'c8':'bishop-black','f8':'bishop-black','c1':'bishop-white','f1':'bishop-white',
-    'd8':'queen-black','e8':'king-black','d1':'queen-white','e1':'king-white',
-    'a7':'pawn-black','b7':'pawn-black','c7':'pawn-black','d7':'pawn-black','e7':'pawn-black','f7':'pawn-black','g7':'pawn-black','h7':'pawn-black',
-    'a2':'pawn-white','b2':'pawn-white','c2':'pawn-white','d2':'pawn-white','e2':'pawn-white','f2':'pawn-white','g2':'pawn-white','h2':'pawn-white'
-}
-*/
-// create a table element
-
-//Add boader with alpha
-addboarder();
-
-// Main content
-for (let i=0;i<8;i++){
-    // Create a row
-    let divRow = document.createElement("div");
-    divRow.setAttribute("class","div-row");
-
-    //Add boader with number
-    let divData = document.createElement("div");
-    divData.setAttribute("class","boarder-box-2");
-    divData.innerHTML = nums[i];
-    divRow.appendChild(divData);
-
-    for (let j=0;j<8;j++){
-        // Create a cell
-        let divData = document.createElement("div");
-        let boxId = alphas[j] + nums[i];
-
-        // Even cells are white cells else black cells
-        if ((i+j) % 2 == 0){
-            // Create a class attribute for all white cells
-            divData.setAttribute("class","piece-box white-box");
-            divData.setAttribute("id",boxId);
-        }else{
-            divData.setAttribute("class","piece-box black-box");
-            divData.setAttribute("id",boxId);
         }
-        if (boxId in moves){
-        let img = document.createElement("img");
-        img.setAttribute("src",pieces[moves[boxId]]);
-        divData.appendChild(img);}
-        // Append the cell
-        divRow.appendChild(divData);
-    }
-
-    //Add boader with number
-    let divData2 = document.createElement("div");
-    divData2.setAttribute("class","boarder-box-2");
-    divData2.innerHTML = nums[i];
-    divRow.appendChild(divData2);
-    parentDiv.appendChild(divRow);
+        let xr = nums.slice(x+1,7);
+        let yu = alphas.slice(y+1,7);
+        let yd = alphas.slice(0,y-1);
+        console.log(xl);
+        console.log(xr); 
+        console.log(yu); 
+        console.log(yd);  
+    }*/
 }
 
-parentDiv.setAttribute("cellspacing","0");
-document.body.appendChild(parentDiv);
+class Knight{
+    #side;
+    constructor(side,piece){
+        this.#side = side;
+        this.piece = piece;
+    }
+}
 
-addboarder();
+class Bishop{
+    #side;
+    constructor(side,piece){
+        this.#side = side;
+        this.piece = piece;
+    }
+}
 
+class King{
+    #side;
+    constructor(side,piece){
+        this.#side = side;
+        this.piece = piece;
+    }
+}
 
-function addboarder(){
+class Queen{
+    #side;
+    constructor(side,piece){
+        this.#side = side;
+        this.piece = piece;
+    }
+}
+
+class Pawn{
+    #side;
+    constructor(side,piece){
+        this.#side = side;
+        this.piece = piece;
+    }
+}
+
+// create a table element
+function drawBoard(){
+    //Add boader with alpha
+    addBoarder();
+
+    // Main content
+    for (let i=0;i<8;i++){
+        // Create a row
+        let divRow = document.createElement("div");
+        divRow.setAttribute("class","div-row");
+
+        //Add boader with number
+        let divData = document.createElement("div");
+        divData.setAttribute("class","boarder-box-2");
+        divData.innerHTML = nums[i];
+        divRow.appendChild(divData);
+
+        for (let j=0;j<8;j++){
+            // Create a cell
+            let divData = document.createElement("div");
+            let boxId = alphas[j] + nums[i];
+
+            // Even cells are white cells else black cells
+            if ((i+j) % 2 == 0){
+                // Create a class attribute for all white cells
+                divData.setAttribute("class","piece-box white-box");
+                divData.setAttribute("id",boxId);
+            }else{
+                divData.setAttribute("class","piece-box black-box");
+                divData.setAttribute("id",boxId);
+            }
+
+            // Append the cell
+            divRow.appendChild(divData);
+        }
+
+        //Add boader with number
+        let divData2 = document.createElement("div");
+        divData2.setAttribute("class","boarder-box-2");
+        divData2.innerHTML = nums[i];
+        divRow.appendChild(divData2);
+        parentDiv.appendChild(divRow);
+    }
+
+    parentDiv.setAttribute("cellspacing","0");
+    document.body.appendChild(parentDiv);
+
+    addBoarder();
+}
+
+function addBoarder(){
     let divRow = document.createElement("div");
     divRow.setAttribute("class","div-row");
 
@@ -168,4 +168,54 @@ function addboarder(){
     parentDiv.appendChild(divRow);
 }
 
-  
+function initiateBoard(){
+    let rbl = new Rook('B','RB')
+    let rwl = new Rook('W','RW')
+    let rbr = new Rook('B','RB')
+    let rwr = new Rook('W','RW')
+
+    let nbl = new Rook('B','NB')
+    let nwl = new Rook('W','NW')
+    let nbr = new Rook('B','NB')
+    let nwr = new Rook('W','NW')
+
+    let bbl = new Rook('B','BB')
+    let bwl = new Rook('W','BW')
+    let bbr = new Rook('B','BB')
+    let bwr = new Rook('W','BW')
+
+    let kb = new Rook('B','BB')
+    let kw = new Rook('W','BW')
+    let qb = new Rook('B','BB')
+    let qw = new Rook('W','BW')
+
+    board[0] = [rbl,nbl,bbl,kb,qb,bbr,nbr,rbr]
+    for (let i= 0;i <8;i++){
+        let p = new Pawn('B','PB')
+        board[1][i] = p;
+    }
+
+    board[7] = [rwl,nwl,bwl,kw,qw,bwr,nwr,rwr]
+    for (let i= 0;i <8;i++){
+        let p = new Pawn('W','PW')
+        board[6][i] = p;
+    }
+}
+
+function addPieces(){
+    for (let i = 0; i < 8 ;i++){
+        for (let j = 0; j < 8 ;j ++){
+            if (board[i][j]){
+                let boxId = alphas[j] + nums[i];
+                let divData = document.getElementById(boxId);
+                let img = document.createElement("img");
+                img.setAttribute("src",pieces[board[i][j].piece]);
+                divData.appendChild(img);
+            }
+        }
+    }
+}
+
+drawBoard();
+initiateBoard();
+addPieces();
