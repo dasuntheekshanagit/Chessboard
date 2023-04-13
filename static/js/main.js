@@ -36,10 +36,11 @@ let board = [[ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
 class Rook{
     #side;
     #position;
-    constructor(side,piece,position){
+    constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
         this.#position = position;
+        this.id = id;
     }
     /*showpath(){
         let goes = [];
@@ -56,17 +57,17 @@ class Rook{
         console.log(xr); 
         console.log(yu); 
         console.log(yd);  
-    }*/
-    
+    }*/    
 }
 
 class Knight{
     #side;
     #position;
-    constructor(side,piece,position){
+    constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
         this.#position = position;
+        this.id = id;
     }
     showpath(){}
 }
@@ -74,10 +75,11 @@ class Knight{
 class Bishop{
     #side;
     #position;
-    constructor(side,piece,position){
+    constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
         this.#position = position;
+        this.id = id;
     }
     showpath(){}
 }
@@ -85,10 +87,11 @@ class Bishop{
 class King{
     #side;
     #position;
-    constructor(side,piece,position){
+    constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
         this.#position = position;
+        this.id = id;
     }
     showpath(){}
 }
@@ -96,10 +99,11 @@ class King{
 class Queen{
     #side;
     #position;
-    constructor(side,piece,position){
+    constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
         this.#position = position;
+        this.id = id;
     }
     showpath(){}
 }
@@ -111,6 +115,10 @@ class Pawn {
         this.#side = side;
         this.piece = piece;
         this.#position = position;
+        this.id = id;
+
+        // Add event listeners for drag and drop
+        //this.addDragDropListeners();
     }
     
     showpath() {
@@ -147,7 +155,53 @@ class Pawn {
           divData.setAttribute("class","piece-box showpath");
         }
       }
-      
+
+      /*addDragDropListeners() {
+        let piece = this;
+        //let divData = document.getElementById(alphas[(this.#position % 8) - 1] + nums[Math.floor(this.#position / 8)]);
+        let row = Math.floor(this.#position/8);
+        let col =  this.#position%8;
+        let divData = document.getElementById(this.id);
+    
+        // Add the "draggable" attribute to the piece's div element
+        divData.setAttribute("draggable", "true");
+    
+        // Add the "ondragstart" event listener to start the drag event
+        divData.ondragstart = function (event) {
+          // Set the drag data (i.e., the ID of the piece) and add a "dragging" class to the piece's div
+          event.dataTransfer.setData("text", piece.id);
+          divData.classList.add("dragging");
+        };
+    
+        // Add the "ondragend" event listener to end the drag event
+        divData.ondragend = function () {
+          // Remove the "dragging" class from the piece's div
+          divData.classList.remove("dragging");
+        };
+    
+        // Add the "ondragover" event listener to allow the piece to be dropped on a square
+        divData.ondragover = function (event) {
+          // Prevent default to allow the drop
+          event.preventDefault();
+        };
+    
+        // Add the "ondrop" event listener to handle the drop event
+        divData.ondrop = function (event) {
+          // Prevent default to avoid reloading the page
+          event.preventDefault();
+    
+          // Get the ID of the dropped piece
+          let id = event.dataTransfer.getData("text");
+    
+          // Get the div element of the dropped piece and remove the "dragging" class
+          let droppedPiece = document.getElementById(id);
+          droppedPiece.classList.remove("dragging");
+    
+          // Get the div element of the target square and add the dropped piece to it
+          let targetSquare = event.target;
+          targetSquare.appendChild(droppedPiece);
+        };
+      }*/
 }
 
 
@@ -182,6 +236,16 @@ function drawBoard(){
                 divData.setAttribute("class","piece-box black-box");
                 divData.setAttribute("id",boxId);
             }
+            divData.addEventListener("dragover", function(event) {
+                event.preventDefault();
+            });
+            divData.addEventListener("drop", function(event) {
+                //const data = event.dataTransfer.getData("id");
+                console.log(event.target);
+                //const draggableElement = document.getElementById(data);
+                //const dropzone = event.target;
+                //dropzone.appendChild(draggableElement);
+              });
 
             // Append the cell
             divRow.appendChild(divData);
@@ -224,34 +288,34 @@ function addBoarder(){
 
 function initiateBoard(){
     //rooks
-    let rbl = new Rook('B','RB',1);
-    let rwl = new Rook('W','RW',57);
-    let rbr = new Rook('B','RB',8);
-    let rwr = new Rook('W','RW',64);
+    let rbl = new Rook('B','RB',1,'RBL');
+    let rwl = new Rook('W','RW',57,'RWL');
+    let rbr = new Rook('B','RB',8,'RBR');
+    let rwr = new Rook('W','RW',64,'RWR');
 
     //knights
-    let nbl = new Knight('B','NB',2);
-    let nwl = new Knight('W','NW',58);
-    let nbr = new Knight('B','NB',7);
-    let nwr = new Knight('W','NW',63);
+    let nbl = new Knight('B','NB',2,'NBL');
+    let nwl = new Knight('W','NW',58,'NWL');
+    let nbr = new Knight('B','NB',7,'NBR');
+    let nwr = new Knight('W','NW',63,'NWR');
 
     //bishops
-    let bbl = new Bishop('B','BB',3)
-    let bwl = new Bishop('W','BW',59)
-    let bbr = new Bishop('B','BB',6)
-    let bwr = new Bishop('W','BW',61)
+    let bbl = new Bishop('B','BB',3,'BBL')
+    let bwl = new Bishop('W','BW',59,'BWL')
+    let bbr = new Bishop('B','BB',6,'BBR')
+    let bwr = new Bishop('W','BW',61,'BWR')
 
     //king and queen
-    let kb = new King('B','KB',4)
-    let kw = new King('W','KW',60)
-    let qb = new Queen('B','QB',5)
-    let qw = new Queen('W','QW',61)
+    let kb = new King('B','KB',4,'KB')
+    let kw = new King('W','KW',60,'KW')
+    let qb = new Queen('B','QB',5,'Qb')
+    let qw = new Queen('W','QW',61,'QW')
 
     board[0] = [rbl,nbl,bbl,kb,qb,bbr,nbr,rbr]
 
     //black pawns
     for (let i= 0;i <8;i++){
-        let p = new Pawn('B','PB',i+9)
+        let p = new Pawn('B','PB',i+9,'PB'+i)
         board[1][i] = p;
     }
 
@@ -259,7 +323,7 @@ function initiateBoard(){
 
     //white pawns
     for (let i= 0;i <8;i++){
-        let p = new Pawn('W','PW',i+49)
+        let p = new Pawn('W','PW',i+49,'PW'+i)
         board[6][i] = p;
     }
 }
@@ -273,7 +337,11 @@ function addPieces(){
                 let img = document.createElement("img");
                 let p = board[i][j];
                 img.setAttribute("src",pieces[p.piece]);
+                img.setAttribute("id",p.id);
                 img.addEventListener("click", function() {
+                    p.showpath();
+                });
+                img.addEventListener("dragstart", function(event) {
                     p.showpath();
                 });
                 divData.appendChild(img);
