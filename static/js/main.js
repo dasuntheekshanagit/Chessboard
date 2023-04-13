@@ -107,21 +107,26 @@ class Queen{
 class Pawn {
     #side;
     #position;
-    
-    constructor(side, piece, position) {
+    constructor(side, piece, position,id) {
         this.#side = side;
         this.piece = piece;
         this.#position = position;
     }
     
     showpath() {
+        clearhilight()
+        let next;
         if (this.#side == 'W' && this.#position >= 9) {
-            console.log(this.#position - 8);
+            next = this.#position - 8;
         }else{
             if (this.#side == 'B' && this.#position <= 56) {
-                console.log(this.#position + 8);
+                next = this.#position + 8;
             }
         }
+        let row = Math.floor(next/8);
+        let col =  next%8;
+        let divData = document.getElementById(alphas[col-1]+nums[row]);
+        divData.setAttribute("class","piece-box showpath");
     }
 }
 
@@ -252,6 +257,20 @@ function addPieces(){
                     p.showpath();
                 });
                 divData.appendChild(img);
+            }
+        }
+    }
+}
+
+function clearhilight(){
+    for (let i = 0; i < 8 ;i++){
+        for (let j = 0; j < 8 ;j ++){
+            let boxId = alphas[j] + nums[i];
+            let divData = document.getElementById(boxId);
+            if ((i+j) % 2 == 0){
+                divData.setAttribute("class","piece-box white-box");
+            }else{
+                divData.setAttribute("class","piece-box black-box");
             }
         }
     }
