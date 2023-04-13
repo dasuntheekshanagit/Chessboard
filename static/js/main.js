@@ -4,6 +4,8 @@ let parentDiv = document.querySelector("#board");
 let alphas = "abcdefgh".split("");
 let nums = "87654321".split("");
 
+let drag;
+
 const pieces = {
     'RW': 'static/img/pieces/Chess_rlt45.svg',
     'RB': 'static/img/pieces/black_Chess_rlt45.svg',
@@ -110,11 +112,10 @@ class Queen{
 
 class Pawn {
     #side;
-    #position;
     constructor(side, piece, position,id) {
         this.#side = side;
         this.piece = piece;
-        this.#position = position;
+        this.position = position;
         this.id = id;
 
         // Add event listeners for drag and drop
@@ -123,8 +124,9 @@ class Pawn {
     
     showpath() {
         clearhilight();
-        let next;
-        let doubleJump = false;
+        let next = this.position;
+        let divData;
+        /*let doubleJump = false;
         if (this.#side == 'W' && this.#position >= 9) {
           next = this.#position - 8;
           if (this.#position >= 49 && this.#position <= 56) {
@@ -137,23 +139,23 @@ class Pawn {
               doubleJump = true;
             }
           }
-        }
-        let row = Math.floor(next/8);
-        let col =  next%8;
-        let divData = document.getElementById(alphas[col-1]+nums[row]);
-        divData.setAttribute("class","piece-box showpath");
+        }*/
+        //let row = Math.floor(next/8);
+        //let col =  next%8;
+        //let divData = document.getElementById(alphas[col-1]+nums[row]);
+        //divData.setAttribute("class","piece-box showpath");
       
-        if (doubleJump) {
+        //if (doubleJump) {
           if (this.#side == 'W') {
             next = next - 8;
           } else {
             next = next + 8;
           }
-          row = Math.floor(next/8);
-          col =  next%8;
-          divData = document.getElementById(alphas[col-1]+nums[row]);
+          //row = Math.floor(next/8);
+          //col =  next%8;
+          divData = document.getElementById(''+next);
           divData.setAttribute("class","piece-box showpath");
-        }
+       // }
       }
 
       /*addDragDropListeners() {
@@ -231,17 +233,19 @@ function drawBoard(){
             if ((i+j) % 2 == 0){
                 // Create a class attribute for all white cells
                 divData.setAttribute("class","piece-box white-box");
-                divData.setAttribute("id",boxId);
+                divData.setAttribute("id",''+(8*(i)+(j+1)));
             }else{
                 divData.setAttribute("class","piece-box black-box");
-                divData.setAttribute("id",boxId);
+                divData.setAttribute("id",''+(8*(i)+(j+1)));
             }
             divData.addEventListener("dragover", function(event) {
                 event.preventDefault();
             });
+
             divData.addEventListener("drop", function(event) {
                 //const data = event.dataTransfer.getData("id");
-                console.log(event.target);
+                //console.log(event.target);
+                dragfun(event.target.id);
                 //const draggableElement = document.getElementById(data);
                 //const dropzone = event.target;
                 //dropzone.appendChild(draggableElement);
@@ -332,8 +336,8 @@ function addPieces(){
     for (let i = 0; i < 8 ;i++){
         for (let j = 0; j < 8 ;j ++){
             if (board[i][j]){
-                let boxId = alphas[j] + nums[i];
-                let divData = document.getElementById(boxId);
+                //let boxId = alphas[j] + nums[i];
+                let divData = document.getElementById(''+(8*(i)+(j+1)));
                 let img = document.createElement("img");
                 let p = board[i][j];
                 img.setAttribute("src",pieces[p.piece]);
@@ -343,6 +347,7 @@ function addPieces(){
                 });
                 img.addEventListener("dragstart", function(event) {
                     p.showpath();
+                    drag = p;
                 });
                 divData.appendChild(img);
             }
@@ -353,8 +358,8 @@ function addPieces(){
 function clearhilight(){
     for (let i = 0; i < 8 ;i++){
         for (let j = 0; j < 8 ;j ++){
-            let boxId = alphas[j] + nums[i];
-            let divData = document.getElementById(boxId);
+            //let boxId = alphas[j] + nums[i];
+            let divData = document.getElementById((''+(8*(i)+(j+1))));
             if ((i+j) % 2 == 0){
                 divData.setAttribute("class","piece-box white-box");
             }else{
@@ -362,6 +367,13 @@ function clearhilight(){
             }
         }
     }
+}
+
+function dragfun(target){
+    drag.position = Number(target);
+    let img = document.getElementById(drag.id);
+    let targetcel = document.getElementById(target);
+    targetcel.appendChild(img);
 }
 
 drawBoard();
