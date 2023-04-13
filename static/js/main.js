@@ -114,20 +114,40 @@ class Pawn {
     }
     
     showpath() {
-        clearhilight()
+        clearhilight();
         let next;
+        let doubleJump = false;
         if (this.#side == 'W' && this.#position >= 9) {
-            next = this.#position - 8;
-        }else{
-            if (this.#side == 'B' && this.#position <= 56) {
-                next = this.#position + 8;
+          next = this.#position - 8;
+          if (this.#position >= 49 && this.#position <= 56) {
+            doubleJump = true;
+          }
+        } else {
+          if (this.#side == 'B' && this.#position <= 56) {
+            next = this.#position + 8;
+            if (this.#position >= 9 && this.#position <= 16) {
+              doubleJump = true;
             }
+          }
         }
         let row = Math.floor(next/8);
         let col =  next%8;
         let divData = document.getElementById(alphas[col-1]+nums[row]);
         divData.setAttribute("class","piece-box showpath");
-    }
+      
+        if (doubleJump) {
+          if (this.#side == 'W') {
+            next = next - 8;
+          } else {
+            next = next + 8;
+          }
+          row = Math.floor(next/8);
+          col =  next%8;
+          divData = document.getElementById(alphas[col-1]+nums[row]);
+          divData.setAttribute("class","piece-box showpath");
+        }
+      }
+      
 }
 
 
