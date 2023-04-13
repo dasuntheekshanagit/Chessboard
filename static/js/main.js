@@ -35,9 +35,11 @@ let board = [[ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
 
 class Rook{
     #side;
-    constructor(side,piece){
+    #position;
+    constructor(side,piece,position){
         this.#side = side;
         this.piece = piece;
+        this.#position = position;
     }
     /*showpath(){
         let goes = [];
@@ -60,43 +62,69 @@ class Rook{
 
 class Knight{
     #side;
-    constructor(side,piece){
+    #position;
+    constructor(side,piece,position){
         this.#side = side;
         this.piece = piece;
+        this.#position = position;
     }
+    showpath(){}
 }
 
 class Bishop{
     #side;
-    constructor(side,piece){
+    #position;
+    constructor(side,piece,position){
         this.#side = side;
         this.piece = piece;
+        this.#position = position;
     }
+    showpath(){}
 }
 
 class King{
     #side;
-    constructor(side,piece){
+    #position;
+    constructor(side,piece,position){
         this.#side = side;
         this.piece = piece;
+        this.#position = position;
     }
+    showpath(){}
 }
 
 class Queen{
     #side;
-    constructor(side,piece){
+    #position;
+    constructor(side,piece,position){
         this.#side = side;
         this.piece = piece;
+        this.#position = position;
+    }
+    showpath(){}
+}
+
+class Pawn {
+    #side;
+    #position;
+    
+    constructor(side, piece, position) {
+        this.#side = side;
+        this.piece = piece;
+        this.#position = position;
+    }
+    
+    showpath() {
+        if (this.#side == 'W' && this.#position >= 9) {
+            console.log(this.#position - 8);
+        }else{
+            if (this.#side == 'B' && this.#position <= 56) {
+                console.log(this.#position + 8);
+            }
+        }
     }
 }
 
-class Pawn{
-    #side;
-    constructor(side,piece){
-        this.#side = side;
-        this.piece = piece;
-    }
-}
 
 // create a table element
 function drawBoard(){
@@ -171,34 +199,34 @@ function addBoarder(){
 
 function initiateBoard(){
     //rooks
-    let rbl = new Rook('B','RB')
-    let rwl = new Rook('W','RW')
-    let rbr = new Rook('B','RB')
-    let rwr = new Rook('W','RW')
+    let rbl = new Rook('B','RB',1);
+    let rwl = new Rook('W','RW',57);
+    let rbr = new Rook('B','RB',8);
+    let rwr = new Rook('W','RW',64);
 
     //knights
-    let nbl = new Knight('B','NB')
-    let nwl = new Knight('W','NW')
-    let nbr = new Knight('B','NB')
-    let nwr = new Knight('W','NW')
+    let nbl = new Knight('B','NB',2);
+    let nwl = new Knight('W','NW',58);
+    let nbr = new Knight('B','NB',7);
+    let nwr = new Knight('W','NW',63);
 
     //bishops
-    let bbl = new Bishop('B','BB')
-    let bwl = new Bishop('W','BW')
-    let bbr = new Bishop('B','BB')
-    let bwr = new Bishop('W','BW')
+    let bbl = new Bishop('B','BB',3)
+    let bwl = new Bishop('W','BW',59)
+    let bbr = new Bishop('B','BB',6)
+    let bwr = new Bishop('W','BW',61)
 
     //king and queen
-    let kb = new King('B','KB')
-    let kw = new King('W','KW')
-    let qb = new Queen('B','QB')
-    let qw = new Queen('W','QW')
+    let kb = new King('B','KB',4)
+    let kw = new King('W','KW',60)
+    let qb = new Queen('B','QB',5)
+    let qw = new Queen('W','QW',61)
 
     board[0] = [rbl,nbl,bbl,kb,qb,bbr,nbr,rbr]
 
     //black pawns
     for (let i= 0;i <8;i++){
-        let p = new Pawn('B','PB')
+        let p = new Pawn('B','PB',i+9)
         board[1][i] = p;
     }
 
@@ -206,7 +234,7 @@ function initiateBoard(){
 
     //white pawns
     for (let i= 0;i <8;i++){
-        let p = new Pawn('W','PW')
+        let p = new Pawn('W','PW',i+49)
         board[6][i] = p;
     }
 }
@@ -218,7 +246,11 @@ function addPieces(){
                 let boxId = alphas[j] + nums[i];
                 let divData = document.getElementById(boxId);
                 let img = document.createElement("img");
-                img.setAttribute("src",pieces[board[i][j].piece]);
+                let p = board[i][j];
+                img.setAttribute("src",pieces[p.piece]);
+                img.addEventListener("click", function() {
+                    p.showpath();
+                });
                 divData.appendChild(img);
             }
         }
