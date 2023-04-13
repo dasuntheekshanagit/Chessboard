@@ -55,6 +55,7 @@ class Rook{
         console.log(yu); 
         console.log(yd);  
     }*/
+    
 }
 
 class Knight{
@@ -169,33 +170,41 @@ function addBoarder(){
 }
 
 function initiateBoard(){
+    //rooks
     let rbl = new Rook('B','RB')
     let rwl = new Rook('W','RW')
     let rbr = new Rook('B','RB')
     let rwr = new Rook('W','RW')
 
-    let nbl = new Rook('B','NB')
-    let nwl = new Rook('W','NW')
-    let nbr = new Rook('B','NB')
-    let nwr = new Rook('W','NW')
+    //knights
+    let nbl = new Knight('B','NB')
+    let nwl = new Knight('W','NW')
+    let nbr = new Knight('B','NB')
+    let nwr = new Knight('W','NW')
 
-    let bbl = new Rook('B','BB')
-    let bwl = new Rook('W','BW')
-    let bbr = new Rook('B','BB')
-    let bwr = new Rook('W','BW')
+    //bishops
+    let bbl = new Bishop('B','BB')
+    let bwl = new Bishop('W','BW')
+    let bbr = new Bishop('B','BB')
+    let bwr = new Bishop('W','BW')
 
-    let kb = new Rook('B','BB')
-    let kw = new Rook('W','BW')
-    let qb = new Rook('B','BB')
-    let qw = new Rook('W','BW')
+    //king and queen
+    let kb = new King('B','KB')
+    let kw = new King('W','KW')
+    let qb = new Queen('B','QB')
+    let qw = new Queen('W','QW')
 
     board[0] = [rbl,nbl,bbl,kb,qb,bbr,nbr,rbr]
+
+    //black pawns
     for (let i= 0;i <8;i++){
         let p = new Pawn('B','PB')
         board[1][i] = p;
     }
 
     board[7] = [rwl,nwl,bwl,kw,qw,bwr,nwr,rwr]
+
+    //white pawns
     for (let i= 0;i <8;i++){
         let p = new Pawn('W','PW')
         board[6][i] = p;
