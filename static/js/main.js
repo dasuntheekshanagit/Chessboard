@@ -59,7 +59,9 @@ class Rook{
         console.log(xr); 
         console.log(yu); 
         console.log(yd);  
-    }*/    
+    }*/  
+    
+      
 }
 
 class Knight{
@@ -83,7 +85,57 @@ class Bishop{
         this.#position = position;
         this.id = id;
     }
-    showpath(){}
+    
+    showpath() {
+        clearhilight();
+        let row = Math.floor((this.position - 1) / 8);
+        let col = (this.position - 1) % 8;
+    
+        // Check diagonal moves towards top left
+        let i = row - 1;
+        let j = col - 1;
+        while (i >= 0 && j >= 0) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i--;
+            j--;
+        }
+    
+        // Check diagonal moves towards top right
+        i = row - 1;
+        j = col + 1;
+        while (i >= 0 && j < 8) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i--;
+            j++;
+        }
+    
+        // Check diagonal moves towards bottom left
+        i = row + 1;
+        j = col - 1;
+        while (i < 8 && j >= 0) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i++;
+            j--;
+        }
+    
+        // Check diagonal moves towards bottom right
+        i = row + 1;
+        j = col + 1;
+        while (i < 8 && j < 8) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i++;
+            j++;
+        }
+    }
+    
 }
 
 class King{
@@ -307,7 +359,7 @@ function initiateBoard(){
     let bbl = new Bishop('B','BB',3,'BBL')
     let bwl = new Bishop('W','BW',59,'BWL')
     let bbr = new Bishop('B','BB',6,'BBR')
-    let bwr = new Bishop('W','BW',61,'BWR')
+    let bwr = new Bishop('W','BW',62,'BWR')
 
     //king and queen
     let kb = new King('B','KB',4,'KB')
