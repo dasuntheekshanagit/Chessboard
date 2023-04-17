@@ -82,7 +82,35 @@ class Knight{
         this.position = position;
         this.id = id;
     }
-    showpath(){}
+    showpath() {
+        clearhilight();
+        let row = 8 - Math.floor((this.position - 1) / 8);
+        let col = String.fromCharCode(65 + ((this.position - 1) % 8));
+    
+        let moves = [
+          [2, -1],
+          [2, 1],
+          [1, -2],
+          [1, 2],
+          [-1, -2],
+          [-1, 2],
+          [-2, -1],
+          [-2, 1]
+        ];
+    
+        for (let move of moves) {
+          let newRow = row + move[0];
+          let newCol = String.fromCharCode(col.charCodeAt(0) + move[1]);
+    
+          if (newRow < 1 || newRow > 8 || newCol < 'A' || newCol > 'H') {
+            continue;
+          }
+    
+          let next = (8 - newRow) * 8 + (newCol.charCodeAt(0) - 65) + 1;
+          let divData = document.getElementById('' + next);
+          divData.setAttribute('class', 'piece-box showpath');
+        }
+      }
 }
 
 class Bishop{
@@ -190,7 +218,82 @@ class Queen{
         this.position = position;
         this.id = id;
     }
-    showpath(){}
+    showpath(){
+        clearhilight();
+        let row = Math.floor((this.position - 1) / 8);
+        let col = (this.position - 1) % 8;
+    
+        // Check diagonal moves towards top left
+        let i = row - 1;
+        let j = col - 1;
+        while (i >= 0 && j >= 0) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i--;
+            j--;
+        }
+    
+        // Check diagonal moves towards top right
+        i = row - 1;
+        j = col + 1;
+        while (i >= 0 && j < 8) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i--;
+            j++;
+        }
+    
+        // Check diagonal moves towards bottom left
+        i = row + 1;
+        j = col - 1;
+        while (i < 8 && j >= 0) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i++;
+            j--;
+        }
+    
+        // Check diagonal moves towards bottom right
+        i = row + 1;
+        j = col + 1;
+        while (i < 8 && j < 8) {
+            let next = i * 8 + j + 1;
+            let divData = document.getElementById('' + next);
+            divData.setAttribute('class', 'piece-box showpath');
+            i++;
+            j++;
+        }
+        
+        // Check horizontal and vertical moves
+        let next = this.position + 8;
+        let divData;
+        while (next <=64){
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+            next += 8;
+        }
+        next = this.position;
+        while (next%8 !=0){
+            next += 1;
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+        }
+        next = this.position-1;
+        while (next%8 !=0){
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+            next -= 1;
+        }
+        next = this.position;
+        while (next >=9){
+            next -= 8;
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+        }
+    } 
 }
 
 class Pawn {
