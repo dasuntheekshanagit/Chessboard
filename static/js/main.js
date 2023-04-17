@@ -37,31 +37,40 @@ let board = [[ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
 
 class Rook{
     #side;
-    #position;
     constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
-        this.#position = position;
+        this.position = position;
         this.id = id;
     }
-    /*showpath(){
-        let goes = [];
-        let x = nums.indexOf(this.position[0]);
-        let y = alphas.indexOf(this.position[1]);
-        let xl = []
-        for (let i = 8; i > x; i--){
-
+    showpath(){
+        clearhilight();
+        let next = this.position+8;
+        let divData;
+        while (next <=64){
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+            next += 8;
         }
-        let xr = nums.slice(x+1,7);
-        let yu = alphas.slice(y+1,7);
-        let yd = alphas.slice(0,y-1);
-        console.log(xl);
-        console.log(xr); 
-        console.log(yu); 
-        console.log(yd);  
-    }*/  
-    
-      
+        next = this.position;
+        while (next%8 !=0){
+            next += 1;
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+        }
+        next = this.position-1;
+        while (next%8 !=0){
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+            next -= 1;
+        }
+        next = this.position;
+        while (next >=9){
+            next -= 8;
+            divData = document.getElementById(''+next);
+            divData.setAttribute("class","piece-box showpath");
+        }
+    }    
 }
 
 class Knight{
@@ -78,11 +87,10 @@ class Knight{
 
 class Bishop{
     #side;
-    #position;
     constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
-        this.#position = position;
+        this.position = position;
         this.id = id;
     }
     
@@ -210,52 +218,6 @@ class Pawn {
        // }
       }
 
-      /*addDragDropListeners() {
-        let piece = this;
-        //let divData = document.getElementById(alphas[(this.#position % 8) - 1] + nums[Math.floor(this.#position / 8)]);
-        let row = Math.floor(this.#position/8);
-        let col =  this.#position%8;
-        let divData = document.getElementById(this.id);
-    
-        // Add the "draggable" attribute to the piece's div element
-        divData.setAttribute("draggable", "true");
-    
-        // Add the "ondragstart" event listener to start the drag event
-        divData.ondragstart = function (event) {
-          // Set the drag data (i.e., the ID of the piece) and add a "dragging" class to the piece's div
-          event.dataTransfer.setData("text", piece.id);
-          divData.classList.add("dragging");
-        };
-    
-        // Add the "ondragend" event listener to end the drag event
-        divData.ondragend = function () {
-          // Remove the "dragging" class from the piece's div
-          divData.classList.remove("dragging");
-        };
-    
-        // Add the "ondragover" event listener to allow the piece to be dropped on a square
-        divData.ondragover = function (event) {
-          // Prevent default to allow the drop
-          event.preventDefault();
-        };
-    
-        // Add the "ondrop" event listener to handle the drop event
-        divData.ondrop = function (event) {
-          // Prevent default to avoid reloading the page
-          event.preventDefault();
-    
-          // Get the ID of the dropped piece
-          let id = event.dataTransfer.getData("text");
-    
-          // Get the div element of the dropped piece and remove the "dragging" class
-          let droppedPiece = document.getElementById(id);
-          droppedPiece.classList.remove("dragging");
-    
-          // Get the div element of the target square and add the dropped piece to it
-          let targetSquare = event.target;
-          targetSquare.appendChild(droppedPiece);
-        };
-      }*/
 }
 
 
