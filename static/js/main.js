@@ -75,11 +75,11 @@ class Rook{
 
 class Knight{
     #side;
-    #position;
+    
     constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
-        this.#position = position;
+        this.position = position;
         this.id = id;
     }
     showpath(){}
@@ -148,23 +148,46 @@ class Bishop{
 
 class King{
     #side;
-    #position;
+    
     constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
-        this.#position = position;
+        this.position = position;
         this.id = id;
     }
-    showpath(){}
+    showpath(){
+        clearhilight();
+        let row = Math.floor((this.position - 1) / 8);
+        let col = (this.position - 1) % 8;
+
+        // Check all 8 adjacent squares
+    for (let i = -1; i <= 1; i++) {
+        for (let j = -1; j <= 1; j++) {
+          // Skip the current position
+          if (i == 0 && j == 0) continue;
+  
+          let newRow = row + i;
+          let newCol = col + j;
+  
+          // Skip invalid positions
+            if (newRow < 0 || newRow > 7 || newCol < 0 || newCol > 7) continue;
+  
+          // Get square and highlight it
+          let next = newRow * 8 + newCol + 1;
+          let divData = document.getElementById('' + next);
+          divData.setAttribute('class', 'piece-box showpath');
+        }
+      }
+    }
 }
 
 class Queen{
     #side;
-    #position;
+    
     constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
-        this.#position = position;
+        this.position = position;
         this.id = id;
     }
     showpath(){}
