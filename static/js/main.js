@@ -44,32 +44,30 @@ class Rook{
         this.id = id;
     }
     showpath(){
+        let path = [];
         clearhilight();
         let next = this.position+8;
         let divData;
         while (next <=64){
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
             next += 8;
         }
         next = this.position;
         while (next%8 !=0){
             next += 1;
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
         }
         next = this.position-1;
         while (next%8 !=0){
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
             next -= 1;
         }
         next = this.position;
         while (next >=9){
             next -= 8;
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
         }
+        hilighed(path);
     }    
 }
 
@@ -83,6 +81,7 @@ class Knight{
         this.id = id;
     }
     showpath() {
+        let path = [];
         clearhilight();
         let row = 8 - Math.floor((this.position - 1) / 8);
         let col = String.fromCharCode(65 + ((this.position - 1) % 8));
@@ -107,10 +106,10 @@ class Knight{
           }
     
           let next = (8 - newRow) * 8 + (newCol.charCodeAt(0) - 65) + 1;
-          let divData = document.getElementById('' + next);
-          divData.setAttribute('class', 'piece-box showpath');
+          path.push(next);
         }
-      }
+        hilighed(path);
+    }
 }
 
 class Bishop{
@@ -123,6 +122,7 @@ class Bishop{
     }
     
     showpath() {
+        let path = [];
         clearhilight();
         let row = Math.floor((this.position - 1) / 8);
         let col = (this.position - 1) % 8;
@@ -132,8 +132,7 @@ class Bishop{
         let j = col - 1;
         while (i >= 0 && j >= 0) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i--;
             j--;
         }
@@ -143,8 +142,7 @@ class Bishop{
         j = col + 1;
         while (i >= 0 && j < 8) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i--;
             j++;
         }
@@ -154,8 +152,7 @@ class Bishop{
         j = col - 1;
         while (i < 8 && j >= 0) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i++;
             j--;
         }
@@ -165,13 +162,12 @@ class Bishop{
         j = col + 1;
         while (i < 8 && j < 8) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i++;
             j++;
         }
+        hilighed(path);
     }
-    
 }
 
 class King{
@@ -184,6 +180,7 @@ class King{
         this.id = id;
     }
     showpath(){
+        let path = [];
         clearhilight();
         let row = Math.floor((this.position - 1) / 8);
         let col = (this.position - 1) % 8;
@@ -192,20 +189,20 @@ class King{
     for (let i = -1; i <= 1; i++) {
         for (let j = -1; j <= 1; j++) {
           // Skip the current position
-          if (i == 0 && j == 0) continue;
+            if (i == 0 && j == 0) continue;
   
-          let newRow = row + i;
-          let newCol = col + j;
+            let newRow = row + i;
+            let newCol = col + j;
   
-          // Skip invalid positions
+            // Skip invalid positions
             if (newRow < 0 || newRow > 7 || newCol < 0 || newCol > 7) continue;
   
-          // Get square and highlight it
-          let next = newRow * 8 + newCol + 1;
-          let divData = document.getElementById('' + next);
-          divData.setAttribute('class', 'piece-box showpath');
+            // Get square and highlight it
+            let next = newRow * 8 + newCol + 1;
+            path.push(next);
         }
       }
+      hilighed(path);
     }
 }
 
@@ -219,6 +216,7 @@ class Queen{
         this.id = id;
     }
     showpath(){
+        let path = [];
         clearhilight();
         let row = Math.floor((this.position - 1) / 8);
         let col = (this.position - 1) % 8;
@@ -228,8 +226,7 @@ class Queen{
         let j = col - 1;
         while (i >= 0 && j >= 0) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i--;
             j--;
         }
@@ -239,8 +236,7 @@ class Queen{
         j = col + 1;
         while (i >= 0 && j < 8) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i--;
             j++;
         }
@@ -250,8 +246,7 @@ class Queen{
         j = col - 1;
         while (i < 8 && j >= 0) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i++;
             j--;
         }
@@ -261,8 +256,7 @@ class Queen{
         j = col + 1;
         while (i < 8 && j < 8) {
             let next = i * 8 + j + 1;
-            let divData = document.getElementById('' + next);
-            divData.setAttribute('class', 'piece-box showpath');
+            path.push(next);
             i++;
             j++;
         }
@@ -271,28 +265,25 @@ class Queen{
         let next = this.position + 8;
         let divData;
         while (next <=64){
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
             next += 8;
         }
         next = this.position;
         while (next%8 !=0){
             next += 1;
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
         }
         next = this.position-1;
         while (next%8 !=0){
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
             next -= 1;
         }
         next = this.position;
         while (next >=9){
             next -= 8;
-            divData = document.getElementById(''+next);
-            divData.setAttribute("class","piece-box showpath");
+            path.push(next);
         }
+        hilighed(path);
     } 
 }
 
@@ -303,47 +294,34 @@ class Pawn {
         this.piece = piece;
         this.position = position;
         this.id = id;
-
-        // Add event listeners for drag and drop
-        //this.addDragDropListeners();
     }
     
     showpath() {
+        let path = [];
         clearhilight();
         let next = this.position;
         let divData;
-        /*let doubleJump = false;
-        if (this.#side == 'W' && this.#position >= 9) {
-          next = this.#position - 8;
-          if (this.#position >= 49 && this.#position <= 56) {
-            doubleJump = true;
-          }
-        } else {
-          if (this.#side == 'B' && this.#position <= 56) {
-            next = this.#position + 8;
-            if (this.#position >= 9 && this.#position <= 16) {
-              doubleJump = true;
-            }
-          }
-        }*/
-        //let row = Math.floor(next/8);
-        //let col =  next%8;
-        //let divData = document.getElementById(alphas[col-1]+nums[row]);
-        //divData.setAttribute("class","piece-box showpath");
-      
-        //if (doubleJump) {
           if (this.#side == 'W') {
             next = next - 8;
           } else {
             next = next + 8;
           }
-          //row = Math.floor(next/8);
-          //col =  next%8;
-          divData = document.getElementById(''+next);
-          divData.setAttribute("class","piece-box showpath");
-       // }
+        
+        path.push(next);
+        hilighed(path);
+    
       }
+}
 
+function hilighed(path){
+    let next,i,j;
+    for(let i =0;i<path.length ; i++){
+        let next = path[i]-1;
+        k = Math.floor(next/8);
+        j = next%8;
+        divData = document.getElementById(''+path[i]);
+        divData.setAttribute("class","piece-box showpath");
+    }
 }
 
 
