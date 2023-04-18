@@ -49,22 +49,26 @@ class Rook{
         let next = this.position+8;
         let divData;
         while (next <=64){
+            if (check(next)){break;};
             path.push(next);
             next += 8;
         }
         next = this.position;
         while (next%8 !=0){
             next += 1;
+            if (check(next)){break;};
             path.push(next);
         }
         next = this.position-1;
         while (next%8 !=0){
+            if (check(next)){break;};
             path.push(next);
             next -= 1;
         }
         next = this.position;
         while (next >=9){
             next -= 8;
+            if (check(next)){break;};
             path.push(next);
         }
         hilighed(path);
@@ -106,6 +110,7 @@ class Knight{
           }
     
           let next = (8 - newRow) * 8 + (newCol.charCodeAt(0) - 65) + 1;
+          if (check(next)){continue;};
           path.push(next);
         }
         hilighed(path);
@@ -132,6 +137,7 @@ class Bishop{
         let j = col - 1;
         while (i >= 0 && j >= 0) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i--;
             j--;
@@ -142,6 +148,7 @@ class Bishop{
         j = col + 1;
         while (i >= 0 && j < 8) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i--;
             j++;
@@ -152,6 +159,7 @@ class Bishop{
         j = col - 1;
         while (i < 8 && j >= 0) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i++;
             j--;
@@ -162,6 +170,7 @@ class Bishop{
         j = col + 1;
         while (i < 8 && j < 8) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i++;
             j++;
@@ -199,6 +208,7 @@ class King{
   
             // Get square and highlight it
             let next = newRow * 8 + newCol + 1;
+            if (check(next)){continue;};
             path.push(next);
         }
       }
@@ -208,7 +218,6 @@ class King{
 
 class Queen{
     #side;
-    
     constructor(side,piece,position,id){
         this.#side = side;
         this.piece = piece;
@@ -226,6 +235,7 @@ class Queen{
         let j = col - 1;
         while (i >= 0 && j >= 0) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i--;
             j--;
@@ -236,6 +246,7 @@ class Queen{
         j = col + 1;
         while (i >= 0 && j < 8) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i--;
             j++;
@@ -246,6 +257,7 @@ class Queen{
         j = col - 1;
         while (i < 8 && j >= 0) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i++;
             j--;
@@ -256,6 +268,7 @@ class Queen{
         j = col + 1;
         while (i < 8 && j < 8) {
             let next = i * 8 + j + 1;
+            if (check(next)){break;};
             path.push(next);
             i++;
             j++;
@@ -265,22 +278,26 @@ class Queen{
         let next = this.position + 8;
         let divData;
         while (next <=64){
+            if (check(next)){break;};
             path.push(next);
             next += 8;
         }
         next = this.position;
         while (next%8 !=0){
             next += 1;
+            if (check(next)){break;};
             path.push(next);
         }
         next = this.position-1;
         while (next%8 !=0){
+            if (check(next)){break;};
             path.push(next);
             next -= 1;
         }
         next = this.position;
         while (next >=9){
             next -= 8;
+            if (check(next)){break;};
             path.push(next);
         }
         hilighed(path);
@@ -306,24 +323,29 @@ class Pawn {
           } else {
             next = next + 8;
           }
-        
-        path.push(next);
-        hilighed(path);
-    
+        if (!(check(next))){
+            path.push(next);
+            hilighed(path);
+        }
       }
 }
 
 function hilighed(path){
-    let next,i,j;
     for(let i =0;i<path.length ; i++){
-        let next = path[i]-1;
-        k = Math.floor(next/8);
-        j = next%8;
         divData = document.getElementById(''+path[i]);
         divData.setAttribute("class","piece-box showpath");
     }
 }
 
+function check(path){
+    let next,i,j;
+    [i,j] = calcij(path - 1);
+    if (board[i][j]){
+        return true;
+    }else{
+        return false;
+    }
+}
 
 // create a table element
 function drawBoard(){
@@ -367,6 +389,11 @@ function drawBoard(){
                 //const draggableElement = document.getElementById(data);
                 //const dropzone = event.target;
                 //dropzone.appendChild(draggableElement);
+              });
+              divData.addEventListener("click", function(event) {
+                //console.log(this.id);
+                dragfun(this.id);
+                
               });
 
             // Append the cell
@@ -462,6 +489,7 @@ function addPieces(){
                 img.setAttribute("id",p.id);
                 img.addEventListener("click", function() {
                     p.showpath();
+                    drag = p;
                 });
                 img.addEventListener("dragstart", function(event) {
                     p.showpath();
@@ -488,10 +516,21 @@ function clearhilight(){
 }
 
 function dragfun(target){
+    let previ,prevj,nexti,nextj;
+    [previ,prevj] = calcij(drag.position-1);
     drag.position = Number(target);
+    [nexti,nextj] = calcij(drag.position-1);
+    board[nexti][nextj] = board[previ][prevj];
+    board[previ][prevj] = 0;
     let img = document.getElementById(drag.id);
     let targetcel = document.getElementById(target);
     targetcel.appendChild(img);
+}
+
+function calcij(num){
+    i = Math.floor(num/8);
+    j = num%8;
+    return [i,j];
 }
 
 drawBoard();
