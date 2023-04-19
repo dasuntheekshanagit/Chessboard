@@ -5,6 +5,7 @@ let alphas = "abcdefgh".split("");
 let nums = "87654321".split("");
 
 let drag;
+let pathc = [17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48];
 
 const pieces = {
     'RW': 'static/img/pieces/Chess_rlt45.svg',
@@ -71,6 +72,7 @@ class Rook{
             if (check(next)){break;};
             path.push(next);
         }
+        pathc = path;
         hilighed(path);
     }    
 }
@@ -113,6 +115,7 @@ class Knight{
           if (check(next)){continue;};
           path.push(next);
         }
+        pathc = path;
         hilighed(path);
         
     }
@@ -176,6 +179,7 @@ class Bishop{
             i++;
             j++;
         }
+        pathc = path;
         hilighed(path);
     }
 }
@@ -213,6 +217,7 @@ class King{
             path.push(next);
         }
       }
+      pathc = path; 
       hilighed(path);
     }
 }
@@ -301,6 +306,7 @@ class Queen{
             if (check(next)){break;};
             path.push(next);
         }
+        pathc = path;
         hilighed(path);
     } 
 }
@@ -377,6 +383,7 @@ class Pawn {
         }
         if (!(check(next))) {
           path.push(next);
+          pathc = path;
           hilighed(path);
         }
     
@@ -579,6 +586,7 @@ function dragfun(target){
     [nexti,nextj] = calcij(next-1);
     console.log(next,board[nexti][nextj],drag.position);
 
+    if (pathc.includes(next)){console.log("valid");
     let targetcel = document.getElementById(target);
     let bnext = board[nexti][nextj];
     /*if (bnext){
@@ -601,7 +609,7 @@ function dragfun(target){
         let firstChild = targetcel.firstElementChild;
         firstChild.remove();
     }
-    
+}
 }
 
 function calcij(num){
