@@ -573,17 +573,34 @@ function clearhilight(){
 }
 
 function dragfun(target){
-    let previ,prevj,nexti,nextj;
+    let previ,prevj,nexti,nextj,next;
     [previ,prevj] = calcij(drag.position-1);
-    drag.position = Number(target);
-    [nexti,nextj] = calcij(drag.position-1);
+    next = Number(target);
+    [nexti,nextj] = calcij(next-1);
+    console.log(next,board[nexti][nextj],drag.position);
+
+    let targetcel = document.getElementById(target);
+    let bnext = board[nexti][nextj];
+    /*if (bnext){
+        console.log(next,board[nexti][nextj],drag.position);
+        /*if (bnext.position != next){
+            console.log("c");
+            let child = document.getElementById(board[nexti][nextj].id);
+            targetcel.removeChild(child);
+        }*/
+    /*}*/
+
+    drag.position = next;
     board[nexti][nextj] = board[previ][prevj];
     board[previ][prevj] = 0;
     let img = document.getElementById(drag.id);
-    
-    let targetcel = document.getElementById(target);
     targetcel.appendChild(img);
-    
+
+    let childCount = targetcel.childElementCount;
+    if (childCount >1){
+        let firstChild = targetcel.firstElementChild;
+        firstChild.remove();
+    }
     
 }
 
