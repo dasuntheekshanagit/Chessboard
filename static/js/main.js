@@ -114,6 +114,7 @@ class Knight{
           path.push(next);
         }
         hilighed(path);
+        
     }
 }
 
@@ -303,7 +304,7 @@ class Queen{
         hilighed(path);
     } 
 }
-
+/*
 class Pawn {
     #side;
     constructor(side, piece, position,id) {
@@ -329,7 +330,60 @@ class Pawn {
         }
       }
 }
-
+*/
+class Pawn {
+    #side;
+    
+    constructor(side, piece, position, id) {
+      this.#side = side;
+      this.piece = piece;
+      this.position = position;
+      this.id = id;
+      
+    }
+  
+    showpath() {
+        let path = [];
+        clearhilight();
+        let next = this.position;
+    
+        //logic for initial 2 square move
+        if ((this.#side == 'W' && next >= 49 && next <= 56) || (this.#side == 'B' && next >= 9 && next <= 16)) {
+          if (this.#side == 'W') {
+            next -= 16;
+          } else {
+            next += 16;
+          }
+          if (!(check(next))) {
+            path.push(next);
+            hilighed(path);
+          }
+          if (this.#side == 'W') {
+            next += 8;
+          } else {
+            next -= 8;
+          }
+          if (!(check(next))) {
+            path.push(next);
+            hilighed(path);
+          }
+          return;
+        }
+    
+        if (this.#side == 'W') {
+          next -= 8;
+        } else {
+          next += 8;
+        }
+        if (!(check(next))) {
+          path.push(next);
+          hilighed(path);
+        }
+    
+    }
+    
+  }
+  
 function hilighed(path){
     for(let i =0;i<path.length ; i++){
         divData = document.getElementById(''+path[i]);
@@ -346,6 +400,9 @@ function check(path){
         return false;
     }
 }
+
+
+  
 
 // create a table element
 function drawBoard(){
@@ -523,8 +580,11 @@ function dragfun(target){
     board[nexti][nextj] = board[previ][prevj];
     board[previ][prevj] = 0;
     let img = document.getElementById(drag.id);
+    
     let targetcel = document.getElementById(target);
     targetcel.appendChild(img);
+    
+    
 }
 
 function calcij(num){
