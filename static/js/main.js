@@ -371,6 +371,7 @@ class Pawn {
           }
           if (!(check(next))) {
             path.push(next);
+            pathc = path;
             hilighed(path);
           }
           return;
@@ -609,7 +610,9 @@ function dragfun(target){
         let firstChild = targetcel.firstElementChild;
         firstChild.remove();
     }
-}
+    }else{
+        drag.showpath();
+    }
 }
 
 function calcij(num){
