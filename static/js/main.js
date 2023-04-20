@@ -359,7 +359,7 @@ class Pawn {
           }
           if (!(check(next,this.side,mv))) {
             path.push(next);
-            hilighed(path);
+           // hilighed(path);
           }
           if (this.side == 'W') {
             next += 8;
@@ -369,9 +369,10 @@ class Pawn {
           if (!(check(next,this.side,mv))) {
             path.push(next);
             pathc = path;
-            hilighed(path);
+            
           }
-          return;
+          hilighed(path);
+          //return;
         }
     
         if (this.side == 'W') {
@@ -385,6 +386,29 @@ class Pawn {
           hilighed(path);
         }
     
+        let x = this.position;
+        if (this.side == 'W') {
+            x -= 7;
+          } else {
+            x += 7;
+          }
+
+        if (pcheck(x,this.side,mv)){
+            path.push(x);
+            //pathc = path;
+            hilighed(path);
+          }
+          x = this.position;
+          if (this.side == 'W') {
+              x -= 9;
+            } else {
+              x += 9;
+            }
+          if (pcheck(x,this.side,mv)){
+              path.push(x);
+              pathc = path;
+              hilighed(path);
+            }
     }
     
   }
@@ -400,7 +424,7 @@ function check(path,side,mv){
     let nextmv,i,j;
     [i,j] = calcij(path - 1);
     nextmv = board[i][j];
-    console.log(nextmv.side);
+    //console.log(nextmv.side);
     if (nextmv.side == side){
         return true;
     }else{
@@ -408,9 +432,18 @@ function check(path,side,mv){
     }
 }
 
-
+function pcheck(path,side,mv){
+    let nextmv,i,j;
+    [i,j] = calcij(path - 1);
+    nextmv = board[i][j];
+    //console.log(path,nextmv.side,side);
+    if (((nextmv.side == 'W') && (side == 'B')) || ((nextmv.side == 'B') && (side == 'W'))){
+        return true;
+    }else{
+        return false;
+    }
+}
   
-
 // create a table element
 function drawBoard(){
     //Add boader with alpha
@@ -584,9 +617,9 @@ function dragfun(target){
     [previ,prevj] = calcij(drag.position-1);
     next = Number(target);
     [nexti,nextj] = calcij(next-1);
-    console.log(next,board[nexti][nextj],drag.position);
+    //console.log(next,board[nexti][nextj],drag.position);
 
-    if (pathc.includes(next)){console.log("valid");
+    if (pathc.includes(next)){//console.log("valid");
     let targetcel = document.getElementById(target);
     let bnext = board[nexti][nextj];
     /*if (bnext){
