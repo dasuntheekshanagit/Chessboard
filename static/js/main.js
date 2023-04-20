@@ -4,7 +4,8 @@ let parentDiv = document.querySelector("#board");
 let alphas = "abcdefgh".split("");
 let nums = "87654321".split("");
 
-let drag;
+let drag ;
+
 let pathc = [17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48];
 
 const pieces = {
@@ -436,7 +437,8 @@ function pcheck(path,side,mv){
     let nextmv,i,j;
     [i,j] = calcij(path - 1);
     nextmv = board[i][j];
-    //console.log(path,nextmv.side,side);
+    console.log(path,nextmv.side,side);
+    
     if (((nextmv.side == 'W') && (side == 'B')) || ((nextmv.side == 'B') && (side == 'W'))){
         return true;
     }else{
@@ -612,6 +614,7 @@ function clearhilight(){
     }
 }
 
+/*
 function dragfun(target){
     let previ,prevj,nexti,nextj,next;
     [previ,prevj] = calcij(drag.position-1);
@@ -629,8 +632,7 @@ function dragfun(target){
             let child = document.getElementById(board[nexti][nextj].id);
             targetcel.removeChild(child);
         }*/
-    /*}*/
-
+    /*}
     drag.position = next;
     board[nexti][nextj] = board[previ][prevj];
     board[previ][prevj] = 0;
@@ -646,6 +648,65 @@ function dragfun(target){
         drag.showpath();
     }
 }
+
+*/
+
+
+
+function dragfun(target) {
+    let previ, prevj, nexti, nextj, next;
+    [previ, prevj] = calcij(drag.position - 1);
+    next = Number(target);
+    [nexti, nextj] = calcij(next - 1);
+  
+    if (pathc.includes(next)) {
+      let targetcel = document.getElementById(target);
+      let bnext = board[nexti][nextj];
+  
+      if (bnext) {
+        // Check if the target cell is occupied by an opponent's piece
+        if (pcheck(next, drag.side, bnext)) {
+          // Store the location of the piece to be captured
+          captureLocation = [nexti, nextj];
+  
+          // Delay the capturing code until the piece has moved to the target cell
+          setTimeout(function() {
+            if (captureLocation) {
+              // Move the captured piece to the captured pieces area
+              let capturedPiece = board[captureLocation[0]][captureLocation[1]];
+              let capturedPiecesArea = document.getElementById("captured-pieces");
+              let img = document.createElement("img");
+              console.log(capturedPiece.id);
+              //img.src = "static/img/pieces/" + capturedPiece.id + ".svg";
+              img.src = "static/img/pieces/Chess_" + capturedPiece.id.toUpperCase() + ".svg";
+
+              capturedPiecesArea.appendChild(img);
+              board[captureLocation[0]][captureLocation[1]] = 0;
+              captureLocation = null;
+            }
+          }, 10);
+        }
+      }
+  
+      drag.position = next;
+      board[nexti][nextj] = board[previ][prevj];
+      board[previ][prevj] = 0;
+      let img = document.getElementById(drag.id);
+      targetcel.appendChild(img);
+  
+      let childCount = targetcel.childElementCount;
+      if (childCount > 1) {
+        let firstChild = targetcel.firstElementChild;
+        firstChild.remove();
+      }
+    } else {
+      drag.showpath();
+    }
+  }
+  
+
+
+
 
 function calcij(num){
     i = Math.floor(num/8);
