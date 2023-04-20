@@ -37,39 +37,39 @@ let board = [[ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ],
              [ 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0 ]]
 
 class Rook{
-    #side;
     constructor(side,piece,position,id){
-        this.#side = side;
+        this.side = side;
         this.piece = piece;
         this.position = position;
         this.id = id;
     }
     showpath(){
         let path = [];
+        let mv=0;
         clearhilight();
         let next = this.position+8;
         let divData;
         while (next <=64){
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             next += 8;
         }
         next = this.position;
         while (next%8 !=0){
             next += 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
         }
         next = this.position-1;
         while (next%8 !=0){
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             next -= 1;
         }
         next = this.position;
         while (next >=9){
             next -= 8;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
         }
         pathc = path;
@@ -78,16 +78,15 @@ class Rook{
 }
 
 class Knight{
-    #side;
-    
     constructor(side,piece,position,id){
-        this.#side = side;
+        this.side = side;
         this.piece = piece;
         this.position = position;
         this.id = id;
     }
     showpath() {
         let path = [];
+        let mv =0;
         clearhilight();
         let row = 8 - Math.floor((this.position - 1) / 8);
         let col = String.fromCharCode(65 + ((this.position - 1) % 8));
@@ -112,7 +111,7 @@ class Knight{
           }
     
           let next = (8 - newRow) * 8 + (newCol.charCodeAt(0) - 65) + 1;
-          if (check(next)){continue;};
+          if (check(next,this.side,mv)){continue;};
           path.push(next);
         }
         pathc = path;
@@ -122,9 +121,8 @@ class Knight{
 }
 
 class Bishop{
-    #side;
     constructor(side,piece,position,id){
-        this.#side = side;
+        this.side = side;
         this.piece = piece;
         this.position = position;
         this.id = id;
@@ -132,6 +130,7 @@ class Bishop{
     
     showpath() {
         let path = [];
+        let mv =0;
         clearhilight();
         let row = Math.floor((this.position - 1) / 8);
         let col = (this.position - 1) % 8;
@@ -141,7 +140,7 @@ class Bishop{
         let j = col - 1;
         while (i >= 0 && j >= 0) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i--;
             j--;
@@ -152,7 +151,7 @@ class Bishop{
         j = col + 1;
         while (i >= 0 && j < 8) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i--;
             j++;
@@ -163,7 +162,7 @@ class Bishop{
         j = col - 1;
         while (i < 8 && j >= 0) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i++;
             j--;
@@ -174,7 +173,7 @@ class Bishop{
         j = col + 1;
         while (i < 8 && j < 8) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i++;
             j++;
@@ -185,16 +184,15 @@ class Bishop{
 }
 
 class King{
-    #side;
-    
     constructor(side,piece,position,id){
-        this.#side = side;
+        this.side = side;
         this.piece = piece;
         this.position = position;
         this.id = id;
     }
     showpath(){
         let path = [];
+        let mv =0;
         clearhilight();
         let row = Math.floor((this.position - 1) / 8);
         let col = (this.position - 1) % 8;
@@ -213,7 +211,7 @@ class King{
   
             // Get square and highlight it
             let next = newRow * 8 + newCol + 1;
-            if (check(next)){continue;};
+            if (check(next,this.side,mv)){continue;};
             path.push(next);
         }
       }
@@ -223,15 +221,15 @@ class King{
 }
 
 class Queen{
-    #side;
     constructor(side,piece,position,id){
-        this.#side = side;
+        this.side = side;
         this.piece = piece;
         this.position = position;
         this.id = id;
     }
     showpath(){
         let path = [];
+        let mv =0;
         clearhilight();
         let row = Math.floor((this.position - 1) / 8);
         let col = (this.position - 1) % 8;
@@ -241,7 +239,7 @@ class Queen{
         let j = col - 1;
         while (i >= 0 && j >= 0) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i--;
             j--;
@@ -252,7 +250,7 @@ class Queen{
         j = col + 1;
         while (i >= 0 && j < 8) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i--;
             j++;
@@ -263,7 +261,7 @@ class Queen{
         j = col - 1;
         while (i < 8 && j >= 0) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i++;
             j--;
@@ -274,7 +272,7 @@ class Queen{
         j = col + 1;
         while (i < 8 && j < 8) {
             let next = i * 8 + j + 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             i++;
             j++;
@@ -284,26 +282,26 @@ class Queen{
         let next = this.position + 8;
         let divData;
         while (next <=64){
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             next += 8;
         }
         next = this.position;
         while (next%8 !=0){
             next += 1;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
         }
         next = this.position-1;
         while (next%8 !=0){
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
             next -= 1;
         }
         next = this.position;
         while (next >=9){
             next -= 8;
-            if (check(next)){break;};
+            if (check(next,this.side,mv)){break;};
             path.push(next);
         }
         pathc = path;
@@ -338,10 +336,8 @@ class Pawn {
 }
 */
 class Pawn {
-    #side;
-    
     constructor(side, piece, position, id) {
-      this.#side = side;
+      this.side = side;
       this.piece = piece;
       this.position = position;
       this.id = id;
@@ -350,26 +346,27 @@ class Pawn {
   
     showpath() {
         let path = [];
+        let mv =0;
         clearhilight();
         let next = this.position;
     
         //logic for initial 2 square move
-        if ((this.#side == 'W' && next >= 49 && next <= 56) || (this.#side == 'B' && next >= 9 && next <= 16)) {
-          if (this.#side == 'W') {
+        if ((this.side == 'W' && next >= 49 && next <= 56) || (this.side == 'B' && next >= 9 && next <= 16)) {
+          if (this.side == 'W') {
             next -= 16;
           } else {
             next += 16;
           }
-          if (!(check(next))) {
+          if (!(check(next,this.side,mv))) {
             path.push(next);
             hilighed(path);
           }
-          if (this.#side == 'W') {
+          if (this.side == 'W') {
             next += 8;
           } else {
             next -= 8;
           }
-          if (!(check(next))) {
+          if (!(check(next,this.side,mv))) {
             path.push(next);
             pathc = path;
             hilighed(path);
@@ -377,12 +374,12 @@ class Pawn {
           return;
         }
     
-        if (this.#side == 'W') {
+        if (this.side == 'W') {
           next -= 8;
         } else {
           next += 8;
         }
-        if (!(check(next))) {
+        if (!(check(next,this.side,mv))) {
           path.push(next);
           pathc = path;
           hilighed(path);
@@ -399,10 +396,12 @@ function hilighed(path){
     }
 }
 
-function check(path){
-    let next,i,j;
+function check(path,side,mv){
+    let nextmv,i,j;
     [i,j] = calcij(path - 1);
-    if (board[i][j]){
+    nextmv = board[i][j];
+    console.log(nextmv.side);
+    if (nextmv.side == side){
         return true;
     }else{
         return false;
